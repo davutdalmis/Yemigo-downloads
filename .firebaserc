@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "yemigo-d707d"
+  },
+  "targets": {
+    "yemigo-d707d": {
+      "hosting": {
+        "downloads": [
+          "downloads-yemigo"
+        ]
+      }
+    }
+  }
+}
