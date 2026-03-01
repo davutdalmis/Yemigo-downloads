@@ -19,10 +19,6 @@ export default function AppCard({
   downloadUrl,
   icon
 }: AppCardProps) {
-  const handleDownload = () => {
-    window.open(downloadUrl, '_blank');
-  };
-
   return (
     <div className="group relative bg-gradient-to-br from-purple-950/20 to-black border border-purple-800/40 rounded-lg overflow-hidden hover:border-purple-600 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-900/50">
       {/* Card content */}
@@ -74,12 +70,13 @@ export default function AppCard({
         </div>
 
         {/* Download button */}
-        <button
-          onClick={handleDownload}
-          className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 rounded-md font-semibold hover:from-purple-500 hover:to-purple-600 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-900/50"
+        <a
+          href={downloadUrl}
+          download
+          className="block w-full text-center bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 rounded-md font-semibold hover:from-purple-500 hover:to-purple-600 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-900/50"
         >
           İndir
-        </button>
+        </a>
       </div>
     </div>
   );
