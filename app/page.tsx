@@ -59,7 +59,7 @@ const apps = [
     version: '2.1.5',
     size: '120 MB',
     description: 'Masaüstü POS sistemi. Sipariş yönetimi, kasa ve raporlama.',
-    downloadUrl: 'https://github.com/davutdalmis/yemigo-releases/releases/download/v1.0.5/YemiGO-v1.0.5.zip',
+    downloadUrl: 'https://github.com/davutdalmis/yemigo-releases/releases/download/v1.0.59/YemiGO-v1.0.59.zip',
   },
 ];
 
