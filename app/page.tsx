@@ -5,55 +5,9 @@ import Hero from '@/components/Hero';
 import AppCard from '@/components/AppCard';
 import Footer from '@/components/Footer';
 
-// Mock data - Firebase'den gelecek
 const apps = [
   {
     id: '1',
-    name: 'Yemigo Express',
-    platform: 'Android' as const,
-    version: '1.0.0',
-    size: '3.8 MB',
-    description: 'Hızlı sipariş ve teslimat uygulaması.',
-    downloadUrl: 'https://console.firebase.google.com/u/0/project/yemigo-d707d/storage/yemigo-d707d.firebasestorage.app/files',
-  },
-  {
-    id: '2',
-    name: 'Yemigo Kurye',
-    platform: 'Android' as const,
-    version: '1.0.0',
-    size: '22 MB',
-    description: 'Kurye takip. Teslimat rotaları ve sipariş takibi.',
-    downloadUrl: '#',
-  },
-  {
-    id: '3',
-    name: 'Yemigo İmalat',
-    platform: 'Android' as const,
-    version: '1.0.0',
-    size: '24 MB',
-    description: 'İmalat ekranı. Mutfak ve üretim takibi.',
-    downloadUrl: '#',
-  },
-  {
-    id: '4',
-    name: 'Yemigo Terminal',
-    platform: 'Android' as const,
-    version: '1.0.0',
-    size: '26 MB',
-    description: 'Garson, müdür ve mutfak personeli için sipariş ve masa yönetimi.',
-    downloadUrl: '#',
-  },
-  {
-    id: '5',
-    name: 'Yemigo Staff',
-    platform: 'Android' as const,
-    version: '1.0.0',
-    size: '25 MB',
-    description: 'Personel yönetimi. Çalışan takibi, vardiya ve izin yönetimi.',
-    downloadUrl: '#',
-  },
-  {
-    id: '6',
     name: 'Yemigo POS',
     platform: 'Windows' as const,
     version: '2.1.5',
