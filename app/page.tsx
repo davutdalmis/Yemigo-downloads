@@ -1,23 +1,50 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import AppCard from '@/components/AppCard';
 import Footer from '@/components/Footer';
 
-const apps = [
-  {
-    id: '1',
-    name: 'Yemigo POS',
-    platform: 'Windows' as const,
-    version: '2.1.5',
-    size: '120 MB',
-    description: 'Masaüstü POS sistemi. Sipariş yönetimi, kasa ve raporlama.',
-    downloadUrl: 'https://github.com/davutdalmis/yemigo-releases/releases/download/v1.0.59/YemiGO-v1.0.59.zip',
-  },
-];
+interface ReleaseAsset {
+  Version: string;
+  Size: number;
+}
+
+function formatSize(bytes: number): string {
+  const mb = bytes / (1024 * 1024);
+  return `${Math.round(mb)} MB`;
+}
 
 export default function Home() {
+  const [version, setVersion] = useState('');
+  const [size, setSize] = useState('');
+
+  useEffect(() => {
+    fetch('https://updates.yemigo.com/releases/releases.win.json')
+      .then((res) => res.json())
+      .then((data: ReleaseAsset[]) => {
+        if (data && data.length > 0) {
+          setVersion(data[0].Version);
+          setSize(formatSize(data[0].Size));
+        }
+      })
+      .catch(() => {
+        // Fallback: versiyon bilgisi alınamazsa boş bırak
+      });
+  }, []);
+
+  const apps = [
+    {
+      id: '1',
+      name: 'YemiGO POS',
+      platform: 'Windows' as const,
+      version,
+      size,
+      description: 'Masaüstü POS sistemi. Sipariş yönetimi, kasa ve raporlama.',
+      downloadUrl: 'https://updates.yemigo.com/releases/YemiGO-win-Setup.exe',
+    },
+  ];
   return (
     <main className="min-h-screen">
       <Header />
