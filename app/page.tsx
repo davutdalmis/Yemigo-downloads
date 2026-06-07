@@ -21,18 +21,29 @@ export default function Home() {
   const [size, setSize] = useState('');
 
   useEffect(() => {
-    fetch('https://updates.yemigo.com/releases/releases.win.json')
+    // Cache busting: timestamp ile releases.win.json'u her zaman taze çek
+    fetch(`https://updates.yemigo.com/releases/releases.win.json?t=${Date.now()}`)
       .then((res) => res.json())
-      .then((data: ReleaseAsset[]) => {
-        if (data && data.length > 0) {
-          setVersion(data[0].Version);
-          setSize(formatSize(data[0].Size));
+      .then((data: { Assets?: ReleaseAsset[] } | ReleaseAsset[]) => {
+        // releases.win.json yapısı: { Assets: [...] } veya doğrudan [...]
+        const assets: ReleaseAsset[] = Array.isArray(data) ? data : (data?.Assets ?? []);
+        if (assets.length > 0) {
+          setVersion(assets[0].Version);
+          setSize(formatSize(assets[0].Size));
         }
       })
       .catch(() => {
         // Fallback: versiyon bilgisi alınamazsa boş bırak
       });
   }, []);
+
+  // Her release'de R2'ye versiyonlu path ile yüklenir (release.ps1):
+  // releases/v{versionNoDots}/YemiGO-Setup.exe
+  // Versiyon bilinmezse fallback olarak eski (cache'li) URL kullanılır.
+  const versionNoDots = version.replace(/\./g, '');
+  const setupUrl = version
+    ? `https://updates.yemigo.com/releases/v${versionNoDots}/YemiGO-Setup.exe`
+    : 'https://updates.yemigo.com/releases/YemiGO-win-Setup.exe';
 
   const apps = [
     {
@@ -42,7 +53,27 @@ export default function Home() {
       version,
       size,
       description: 'Masaüstü POS sistemi. Sipariş yönetimi, kasa ve raporlama.',
-      downloadUrl: 'https://updates.yemigo.com/releases/YemiGO-win-Setup.exe',
+      downloadUrl: setupUrl,
+    },
+    {
+      id: '2',
+      name: 'YemiGO Caller',
+      platform: 'Android' as const,
+      version: '1.0.2',
+      size: '4 MB',
+      description: 'Gelen aramaları POS\'a iletir. Şube telefonuna kurulur, çağrıda müşteri kartı otomatik açılır.',
+      downloadUrl: '/YemiGO-Caller-v1.0.2.apk',
+    },
+    {
+      // Sürüm/boyut Caller gibi sabit (updates.yemigo.com CORS'suz, tarayıcıdan fetch bloklanır).
+      // Yeni terminal sürümünde burayı + OTA latest.json'u güncelle. İndirme R2'den (download CORS gerektirmez).
+      id: '3',
+      name: 'Yemigo Terminal',
+      platform: 'Android' as const,
+      version: '0.2.0',
+      size: '37 MB',
+      description: 'El terminali (DT50). Sevkiyat teslimatı ve depo mal kabulü. QR ile eşlenir, uygulama içi otomatik güncellenir.',
+      downloadUrl: 'https://updates.yemigo.com/terminal/yemigo-terminal-0.2.0.apk',
     },
   ];
   return (
